@@ -8,6 +8,7 @@ import lombok.Data;
 public class PullRequestSRO implements Serializable {
 
   private Integer number;
+  private Integer pullRequestId;
   private String state;
   private String title;
   private String body;

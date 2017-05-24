@@ -1,10 +1,7 @@
 package com.shashank.tracker.model.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.shashank.tracker.model.sro.GitHubRepository;
 import com.shashank.tracker.model.sro.PullRequest;
-import com.shashank.tracker.model.sro.Sender;
-import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -14,6 +11,4 @@ public class PullRequestEvent extends BaseRequest {
   private Integer number;
   @JsonProperty("pull_request")
   private PullRequest pullRequest;
-  private GitHubRepository repository;
-  private Sender sender;
 }

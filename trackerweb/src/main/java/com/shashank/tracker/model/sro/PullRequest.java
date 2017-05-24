@@ -4,15 +4,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
-
+/*
+Only chosen the selected fields from PullRequestEvent to map in our application
+ */
 @Data
 public class PullRequest implements Serializable {
 
   private String url;
   @JsonProperty("id")
   private Integer pullRequestId;
-  @JsonProperty("html_url")
-  private String htmlUrl;
   private Integer number;
   private String state;
   private String title;

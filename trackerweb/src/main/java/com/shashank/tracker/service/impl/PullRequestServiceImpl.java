@@ -52,6 +52,7 @@ public class PullRequestServiceImpl implements IPullRequestService {
       throw new ValidationException(ExceptionCodes.PULL_REQUEST_MISSING.errCode(),
           ExceptionCodes.PULL_REQUEST_MISSING.errMsg());
     }
+    log.info("Received payload is: "+payload);
     PullRequestDO entity = pullRequestDao
         .getPullRequestDOByPullRequestId(pullRequest.getPullRequestId());
     if (entity == null) {
@@ -75,6 +76,7 @@ public class PullRequestServiceImpl implements IPullRequestService {
     }
     PullRequestSRO sro = new PullRequestSRO();
     sro.setNumber(entity.getNumber());
+    sro.setPullRequestId(entity.getPullRequestId());
     sro.setBody(entity.getBody());
     sro.setState(entity.getState());
     sro.setTitle(entity.getTitle());
