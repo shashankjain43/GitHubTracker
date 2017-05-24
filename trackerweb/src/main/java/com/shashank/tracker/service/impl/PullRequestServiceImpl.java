@@ -2,6 +2,8 @@ package com.shashank.tracker.service.impl;
 
 import com.shashank.tracker.dao.IPullRequestDao;
 import com.shashank.tracker.entity.PullRequestDO;
+import com.shashank.tracker.exception.ExceptionCodes;
+import com.shashank.tracker.exception.ValidationException;
 import com.shashank.tracker.model.request.GetPullRequestDetailsRequest;
 import com.shashank.tracker.model.request.PullRequestEvent;
 import com.shashank.tracker.model.response.AddPullRequestResponse;
@@ -32,13 +34,24 @@ public class PullRequestServiceImpl implements IPullRequestService {
   @Override
   public AddPullRequestResponse addPullRequest(PullRequestEvent payload) {
     AddPullRequestResponse response = new AddPullRequestResponse();
+    if(payload == null){
+      log.info(ExceptionCodes.PAYLOAD_MISSING.errMsg());
+      throw new ValidationException(ExceptionCodes.PAYLOAD_MISSING.errCode(),
+          ExceptionCodes.PAYLOAD_MISSING.errMsg());
+    }
     PullRequestDO entity = preparePullRequestDOFromEventPayload(payload);
     pullRequestDao.save(entity);
+    response.setSuccess(true);
     return response;
   }
 
   private PullRequestDO preparePullRequestDOFromEventPayload(PullRequestEvent payload) {
     PullRequest pullRequest = payload.getPullRequest();
+    if(pullRequest == null){
+      log.info(ExceptionCodes.PULL_REQUEST_MISSING.errMsg()+" hence ignoring this payload!");
+      throw new ValidationException(ExceptionCodes.PULL_REQUEST_MISSING.errCode(),
+          ExceptionCodes.PULL_REQUEST_MISSING.errMsg());
+    }
     PullRequestDO entity = pullRequestDao
         .getPullRequestDOByPullRequestId(pullRequest.getPullRequestId());
     if (entity == null) {

@@ -2,6 +2,7 @@ package com.shashank.tracker.controller;
 
 import com.shashank.tracker.exception.ExceptionCodes;
 import com.shashank.tracker.exception.GenericException;
+import com.shashank.tracker.exception.ValidationException;
 import com.shashank.tracker.model.response.BaseResponse;
 import com.shashank.tracker.model.response.ServiceResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,13 @@ public class BaseController {
     ex.setErrorCode(ExceptionCodes.INTERNAL_SERVER.errCode());
     ex.setErrorMsg(ExceptionCodes.INTERNAL_SERVER.errMsg());
     response.setException(ex);
+    return response;
+  }
+
+  @ExceptionHandler(ValidationException.class)
+  public <T extends BaseResponse> ServiceResponse<T> handleExcpetion(ValidationException exception) {
+    ServiceResponse<T> response = new ServiceResponse<T>();
+    response.setException(exception);
     return response;
   }
 }

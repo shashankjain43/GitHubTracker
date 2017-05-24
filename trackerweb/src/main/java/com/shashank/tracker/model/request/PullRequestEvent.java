@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.shashank.tracker.model.sro.GitHubRepository;
 import com.shashank.tracker.model.sro.PullRequest;
 import com.shashank.tracker.model.sro.Sender;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
