@@ -7,6 +7,8 @@ DROP TABLE IF EXISTS `pull_request`;
 CREATE TABLE `pull_request` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `number` int(11) NOT NULL,
+  `repo_id` int(11) ,
+  `repo_full_name` varchar(255),
   `pull_request_id` int(11) NOT NULL,
   `state` varchar(50) NOT NULL,
   `title` varchar(1024),

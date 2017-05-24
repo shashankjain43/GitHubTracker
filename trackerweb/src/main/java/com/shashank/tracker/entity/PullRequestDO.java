@@ -26,10 +26,16 @@ public class PullRequestDO implements Serializable {
   @Column(name = "pull_request_id")
   private Integer pullRequestId;
 
-  @Column(name = "state", nullable = false)
+  @Column(name = "repo_id")
+  private Integer repoId;
+
+  @Column(name = "repo_full_name")
+  private String repoFullName;
+
+  @Column(name = "state")
   private String state;
 
-  @Column(name = "title", nullable = false)
+  @Column(name = "title")
   private String title;
 
   @Column(name = "body")
