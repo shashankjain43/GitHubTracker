@@ -4,7 +4,6 @@ import com.shashank.tracker.dao.IPullRequestDao;
 import com.shashank.tracker.entity.PullRequestDO;
 import com.shashank.tracker.exception.ExceptionCodes;
 import com.shashank.tracker.exception.ValidationException;
-import com.shashank.tracker.model.request.GetPullRequestDetailsRequest;
 import com.shashank.tracker.model.request.PullRequestEvent;
 import com.shashank.tracker.model.response.AddPullRequestResponse;
 import com.shashank.tracker.model.response.GetPullRequestResponse;
@@ -34,7 +33,7 @@ public class PullRequestServiceImpl implements IPullRequestService {
   @Override
   public AddPullRequestResponse addPullRequest(PullRequestEvent payload) {
     AddPullRequestResponse response = new AddPullRequestResponse();
-    if(payload == null){
+    if (payload == null) {
       log.info(ExceptionCodes.PAYLOAD_MISSING.errMsg());
       throw new ValidationException(ExceptionCodes.PAYLOAD_MISSING.errCode(),
           ExceptionCodes.PAYLOAD_MISSING.errMsg());
@@ -47,12 +46,12 @@ public class PullRequestServiceImpl implements IPullRequestService {
 
   private PullRequestDO preparePullRequestDOFromEventPayload(PullRequestEvent payload) {
     PullRequest pullRequest = payload.getPullRequest();
-    if(pullRequest == null){
-      log.info(ExceptionCodes.PULL_REQUEST_MISSING.errMsg()+" hence ignoring this payload!");
+    if (pullRequest == null) {
+      log.info(ExceptionCodes.PULL_REQUEST_MISSING.errMsg() + " hence ignoring this payload!");
       throw new ValidationException(ExceptionCodes.PULL_REQUEST_MISSING.errCode(),
           ExceptionCodes.PULL_REQUEST_MISSING.errMsg());
     }
-    log.info("Received payload is: "+payload);
+    log.info("Received payload is: " + payload);
     PullRequestDO entity = pullRequestDao
         .getPullRequestDOByPullRequestId(pullRequest.getPullRequestId());
     if (entity == null) {
@@ -60,6 +59,9 @@ public class PullRequestServiceImpl implements IPullRequestService {
     }
     entity.setPullRequestId(pullRequest.getPullRequestId());
     entity.setNumber(pullRequest.getNumber());
+    entity.setRepoId(payload.getRepository() != null ? payload.getRepository().getRepoId() : null);
+    entity.setRepoFullName(
+        payload.getRepository() != null ? payload.getRepository().getFullName() : null);
     entity.setTitle(pullRequest.getTitle());
     entity.setBody(pullRequest.getBody());
     entity.setState(pullRequest.getState());
@@ -77,6 +79,8 @@ public class PullRequestServiceImpl implements IPullRequestService {
     PullRequestSRO sro = new PullRequestSRO();
     sro.setNumber(entity.getNumber());
     sro.setPullRequestId(entity.getPullRequestId());
+    sro.setRepoId(entity.getRepoId());
+    sro.setRepoFullName(entity.getRepoFullName());
     sro.setBody(entity.getBody());
     sro.setState(entity.getState());
     sro.setTitle(entity.getTitle());

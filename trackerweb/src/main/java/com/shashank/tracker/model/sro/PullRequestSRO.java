@@ -9,6 +9,8 @@ public class PullRequestSRO implements Serializable {
 
   private Integer number;
   private Integer pullRequestId;
+  private Integer repoId;
+  private String repoFullName;
   private String state;
   private String title;
   private String body;
