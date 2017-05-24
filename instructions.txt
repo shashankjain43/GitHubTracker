@@ -1,0 +1,8 @@
+1. Execute ddl/schema.sql file on local mysql.
+2. Create a webhook for listening PullRequestEvent on a sample repository on your github account.
+3. install ngrok on local machine and enable 8080 port to lsten http data from Internet.
+4. Now, updat webhook details to contain this new forwarding url.
+4. Bring up the web server as below:
+      1. go to GitHubTracker/trackerweb/.
+      2. say "mvn spring-boot:run" this will start a local tomcat web server to listen http request in port 8080.
+      
