@@ -1,0 +1,17 @@
+Below are the instructions to receive PullRequest details from GitHub to locally hosted webapp:
+
+1. Execute ddl/schema.sql file on local mysql.
+
+2. Create a webhook for listening PullRequestEvent on a sample repository on your github account.
+
+3. Install ngrok on local machine and enable 8080 port to lsten http requests from Internet.
+      3.1. Download and unzip ngrok to a suitable place.
+      3.2. go to this directory and say "./ngrok http 8080". This will create a tunnel to localhost
+           and will show something like below url
+           Forwarding                    http://146c3a5d.ngrok.io -> localhost:8080
+
+4. Now, update webhook's Payload URL field to the above *.ngrok.io/service/pullRequest/receive
+5. Bring up the web server as below:
+     1. go to GitHubTracker/trackerweb/
+     2. say "mvn spring-boot:run" this will start a local tomcat web server to listen http request in port 8080.
+     3. Now we are good to receive the pull request updates from GitHub.
